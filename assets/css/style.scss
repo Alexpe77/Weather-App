@@ -6,4 +6,30 @@
 
 body {
     background-color: grey;
+    #main__title {
+        height: 50px;
+    }
+    h1 {
+        text-align: center;
+        font-family: Georgia, Times, 'Times New Roman', serif;
+    }
+    .inputs {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+    #getWeatherBtn {
+        width: 100px;
+    }
+}
+
+.city-photos {
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+
+   #photo {
+        max-width: 350px;
+        max-height: 200px;
+    }
 }

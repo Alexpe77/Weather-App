@@ -7,7 +7,8 @@ export async function getWeather() {
     try {
         const response = await fetch('https://api.openweathermap.org/data/2.5/forecast?q=' + city + ',' + country + '&appid=5683e9929dbb6b31b7fc841e9f3401a0');
         const data = await response.json();
-
+        console.log(data)
+        
         const forecasts = data.list;
         const dailyForecasts = groupByDay(forecasts);
 
@@ -15,6 +16,20 @@ export async function getWeather() {
         let forecastCount = 0;
 
         const cityName = data.city.name;
+        const unsplashResponse = await axios.get('https://api.unsplash.com/search/photos', {
+            params: {
+              query: cityName,
+              orientation: 'landscape',
+              per_page: 1,
+              client_id: 'o2oQlKeePYHEBrcQB0ZCi7DFeRn5-yAHix1lWoL_UoA'
+            }
+        });
+
+        const photoUrl = unsplashResponse.data.results[0].urls.regular;
+        const photoElement = document.getElementById('photo');
+        photoElement.src = photoUrl;
+        photoElement.alt = cityName;
+
         const cityTitle = document.createElement('h2');
         cityTitle.textContent = cityName;
         document.getElementById('forecasts').insertBefore(cityTitle, document.getElementById('output'));
@@ -29,7 +44,7 @@ export async function getWeather() {
                 const day = dateParts[2];
 
                 const formattedDate = day + ' ' + month + ' ' + year;
-                const temperature = Math.round(forecast.reduce((acc, cur) => acc + cur.main.temp, 0) / forecast.length) - 273.15;
+                const temperature = Math.round(forecast[0].main.temp - 273.15);
 
                 const listItem = document.createElement('li');
 
