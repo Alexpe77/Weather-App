@@ -1,6 +1,6 @@
-import { groupByDay } from './groupbyday.js'
+import { groupByDay } from './groupbyday.js';
 
-async function getWeather() {
+export async function getWeather() {
     let city = document.getElementById('cityInput').value;
     let country = document.getElementById('countryInput').value;
 
@@ -21,6 +21,7 @@ async function getWeather() {
 
         dailyForecasts.forEach((forecast) => {
             if (forecastCount < forecastLimit) {
+    
                 const dateText = forecast[0].dt_txt.split(' ')[0];
                 const dateParts = dateText.split('-');
                 const year = dateParts[0];
@@ -28,23 +29,23 @@ async function getWeather() {
                 const day = dateParts[2];
 
                 const formattedDate = day + ' ' + month + ' ' + year;
-
-                const output = document.createElement('div');
-
-                const dateElement = document.createElement('span');
-                dateElement.textContent = formattedDate;
-
-                const temperatureElement = document.createElement('span');
                 const temperature = Math.round(forecast.reduce((acc, cur) => acc + cur.main.temp, 0) / forecast.length) - 273.15;
+
+                const listItem = document.createElement('li');
+
+                const dateElement = document.createElement('div');
+                dateElement.textContent = formattedDate;
+                listItem.appendChild(dateElement);
+
+                const temperatureElement = document.createElement('div');
                 temperatureElement.textContent = temperature.toFixed(0) + '°C';
+                listItem.appendChild(temperatureElement);
 
-                output.appendChild(dateElement);
-                output.appendChild(temperatureElement);
+                const descriptionElement = document.createElement('div');
+                descriptionElement.textContent = forecast[0].weather[0].description;
+                listItem.appendChild(descriptionElement);
 
-                document.getElementById('forecasts').appendChild(output);
-
-                forecastCount++;
-
+                document.getElementById('forecasts').appendChild(listItem);
             }
         });
     }
