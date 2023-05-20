@@ -1,11 +1,13 @@
 import { groupByDay } from './groupbyday.js';
+import config from './config.js';
 
 export async function getWeather() {
     let city = document.getElementById('cityInput').value;
     let country = document.getElementById('countryInput').value;
 
     try {
-        const response = await fetch('https://api.openweathermap.org/data/2.5/forecast?q=' + city + ',' + country + '&appid=5683e9929dbb6b31b7fc841e9f3401a0');
+        const apiKeyOW = config.openweatherApiKey;
+        const response = await fetch('https://api.openweathermap.org/data/2.5/forecast?q=' + city + ',' + country + apiKeyOW);
         const data = await response.json();
         console.log(data)
         
@@ -16,12 +18,13 @@ export async function getWeather() {
         let forecastCount = 0;
 
         const cityName = data.city.name;
+        const apiKeyU = config.unsplashApiKey;
         const unsplashResponse = await axios.get('https://api.unsplash.com/search/photos', {
             params: {
               query: cityName,
               orientation: 'landscape',
               per_page: 1,
-              client_id: 'o2oQlKeePYHEBrcQB0ZCi7DFeRn5-yAHix1lWoL_UoA'
+              client_id: apiKeyU
             }
         });
 
