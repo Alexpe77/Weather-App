@@ -17,6 +17,9 @@ body {
         display: flex;
         justify-content: center;
         gap: 10px;
+            input[type="text"] {
+                text-align: center;
+            }
             ::placeholder {
                 text-align: center;
             }

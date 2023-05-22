@@ -19,6 +19,9 @@ body .inputs {
   justify-content: center;
   gap: 10px;
 }
+body .inputs input[type=text] {
+  text-align: center;
+}
 body .inputs ::-moz-placeholder {
   text-align: center;
 }
