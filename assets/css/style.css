@@ -19,23 +19,31 @@ body .inputs {
   justify-content: center;
   gap: 10px;
 }
-body #forecasts {
+body .inputs ::-moz-placeholder {
   text-align: center;
 }
-body #forecasts h2 {
-  margin: 0 auto;
+body .inputs ::placeholder {
+  text-align: center;
+}
+body #getWeatherBtn {
+  width: 120px;
+}
+
+#forecasts {
+  text-align: center;
+}
+#forecasts h2 {
+  margin: 10px auto;
   padding: 5px;
   background-color: whitesmoke;
-  width: 100px;
+  max-width: 200px;
   text-align: center;
   border-radius: 10px;
 }
-body #forecasts #getWeatherBtn {
-  width: 100px;
-}
 
-.city-photos {
+#photoContainer {
   display: flex;
+  justify-content: center;
 }
 
 #photo1 {

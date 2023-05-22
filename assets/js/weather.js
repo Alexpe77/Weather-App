@@ -9,7 +9,7 @@ export async function getWeather() {
         const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city},${country}&appid=${apiKeyOW}`;
         const response = await fetch(url);
         const data = await response.json();
-        
+
         const forecasts = data.list;
         const dailyForecasts = groupByDay(forecasts);
 
@@ -27,43 +27,47 @@ export async function getWeather() {
         photoElement.src = photoUrl;
         photoElement.alt = cityName;
 
-
         const cityTitle = document.createElement('h2');
         cityTitle.textContent = cityName;
+        document.getElementById('forecasts').innerHTML = '';
         document.getElementById('forecasts').insertBefore(cityTitle, document.getElementById('output'));
+
+        let forecastListHTML = '';
 
         dailyForecasts.forEach((forecast) => {
             if (forecastCount < forecastLimit) {
-    
                 const dateText = forecast[0].dt_txt.split(' ')[0];
                 const dateParts = dateText.split('-');
                 const year = dateParts[0];
                 const month = new Date(dateText + 'T00:00:00').toLocaleString('default', { month: 'long' });
                 const day = dateParts[2];
-
                 const formattedDate = day + ' ' + month + ' ' + year;
                 const temperature = Math.round(forecast[0].main.temp - 273.15);
+                const feelsLike = Math.round(forecast[0].main.feels_like - 273.15);
+                const weatherIconCode = forecast[0].weather[0].icon;
+                const weatherIconUrl = getWeatherIconUrl(weatherIconCode);
 
-                const listItem = document.createElement('li');
+                forecastListHTML += `
+          <li>
+            <div>${formattedDate}</div>
+            <div>Temperature: ${temperature.toFixed(0)}°C</div>
+            <div>Feels like: ${feelsLike.toFixed(0)}°C</div>
+            <div><img src="${weatherIconUrl}" alt="Weather icon"></div>
+          </li>
+        `;
 
-                const dateElement = document.createElement('div');
-                dateElement.textContent = formattedDate;
-                listItem.appendChild(dateElement);
-
-                const temperatureElement = document.createElement('div');
-                temperatureElement.textContent = temperature.toFixed(0) + '°C';
-                listItem.appendChild(temperatureElement);
-
-                const descriptionElement = document.createElement('div');
-                descriptionElement.textContent = forecast[0].weather[0].description;
-                listItem.appendChild(descriptionElement);
-
-                document.getElementById('forecasts').appendChild(listItem);
                 forecastCount++;
             }
         });
+
+        document.getElementById('forecasts').innerHTML += forecastListHTML;
+    } catch (error) {
+        console.log('An error has occurred', error);
     }
-    catch (error) {
-        console.log('An error as occured', error);
-    }
+}
+
+function getWeatherIconUrl(iconCode) {
+    const iconBaseUrl = 'https://openweathermap.org/img/wn/';
+    const iconSize = '@2x.png';
+    return `${iconBaseUrl}${iconCode}${iconSize}`;
 }

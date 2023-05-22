@@ -11,22 +11,25 @@
     <script type="module" src="./assets/js/main.js"></script>
     <title>Weather App</title>
 </head>
-<body>
+<body>    
     <div id="main__title">
         <h1>Weather App</h1>
-    </div>
-    <div class="inputs">
+      </div>
+      <div class="inputs">
         <input type="text" id="cityInput" placeholder="Enter a city">
         <datalist id="suggestions"></datalist>
         <input type="text" id="countryInput" placeholder="Enter a country">
         <button id="getWeatherBtn">Get weather forecast</button>
-    </div>
-    <ul class="city-photos">
-
-    </ul>
-    <div id="forecasts">
-        <li><img id="photo1" src="" alt=""></li>
-    </div>
-
+      </div>
+      <div id="weatherContainer">
+        <div id="photoContainer">
+          <img id="photo1" src="" alt="City photo">
+        </div>
+        <div id="forecastsContainer">
+          <h2 id="cityTitle"></h2>
+          <ul id="forecasts"></ul>
+        </div>
+      </div>
+      
 </body>
 </html>
