@@ -6,30 +6,40 @@
 
 body {
     background-color: grey;
+    font-family: 'Rubik', sans-serif;
     #main__title {
         height: 50px;
     }
     h1 {
         text-align: center;
-        font-family: Georgia, Times, 'Times New Roman', serif;
     }
     .inputs {
         display: flex;
         justify-content: center;
         gap: 10px;
     }
-    #getWeatherBtn {
-        width: 100px;
+    #forecasts {
+        text-align: center;
+        h2 {
+            margin: 0 auto;
+            padding: 5px;
+            background-color: whitesmoke;
+            width: 100px;
+            text-align: center;
+            border-radius: 10px;
+        }
+        #getWeatherBtn {
+            width: 100px;
+        }
     }
 }
-
 .city-photos {
     display: flex;
-    flex-wrap: wrap;
-    list-style-type: none;
+}
 
-   #photo {
+#photo1 {
+        margin-top: 20px;
         max-width: 350px;
         max-height: 200px;
+        border-radius: 10px;
     }
-}

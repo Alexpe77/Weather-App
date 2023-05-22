@@ -1,15 +1,14 @@
 import { groupByDay } from './groupbyday.js';
-import config from './config.js';
 
 export async function getWeather() {
     let city = document.getElementById('cityInput').value;
     let country = document.getElementById('countryInput').value;
 
     try {
-        const apiKeyOW = config.openweatherApiKey;
-        const response = await fetch('https://api.openweathermap.org/data/2.5/forecast?q=' + city + ',' + country + apiKeyOW);
+        const apiKeyOW = '5683e9929dbb6b31b7fc841e9f3401a0';
+        const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city},${country}&appid=${apiKeyOW}`;
+        const response = await fetch(url);
         const data = await response.json();
-        console.log(data)
         
         const forecasts = data.list;
         const dailyForecasts = groupByDay(forecasts);
@@ -18,20 +17,16 @@ export async function getWeather() {
         let forecastCount = 0;
 
         const cityName = data.city.name;
-        const apiKeyU = config.unsplashApiKey;
-        const unsplashResponse = await axios.get('https://api.unsplash.com/search/photos', {
-            params: {
-              query: cityName,
-              orientation: 'landscape',
-              per_page: 1,
-              client_id: apiKeyU
-            }
-        });
+        const apiKeyU = 'o2oQlKeePYHEBrcQB0ZCi7DFeRn5-yAHix1lWoL_UoA';
+        const unsplashResponse = await fetch(`https://api.unsplash.com/search/photos?query=${cityName}&orientation=landscape&per_page=1&client_id=${apiKeyU}`);
 
-        const photoUrl = unsplashResponse.data.results[0].urls.regular;
-        const photoElement = document.getElementById('photo');
+        const unsplashData = await unsplashResponse.json();
+
+        const photoUrl = unsplashData.results[0].urls.regular;
+        const photoElement = document.getElementById('photo1');
         photoElement.src = photoUrl;
         photoElement.alt = cityName;
+
 
         const cityTitle = document.createElement('h2');
         cityTitle.textContent = cityName;
@@ -64,6 +59,7 @@ export async function getWeather() {
                 listItem.appendChild(descriptionElement);
 
                 document.getElementById('forecasts').appendChild(listItem);
+                forecastCount++;
             }
         });
     }
