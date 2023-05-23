@@ -23,16 +23,28 @@ export async function getWeather() {
         const unsplashData = await unsplashResponse.json();
 
         const photoUrl = unsplashData.results[0].urls.regular;
-        const photoElement = document.getElementById('photo1');
+
+        const searchContainer = document.createElement('div');
+        searchContainer.classList.add('search-container');
+
+        const photoContainer = document.createElement('div');
+        photoContainer.classList.add('photo');
+        const photoElement = document.createElement('img');
+        photoElement.classList.add('photo');
         photoElement.src = photoUrl;
         photoElement.alt = cityName;
+        photoContainer.appendChild(photoElement);
 
+        const forecastsContainer = document.createElement('div');
+        forecastsContainer.classList.add('forecasts-container');
         const cityTitle = document.createElement('h2');
+        cityTitle.classList.add('city-title');
         cityTitle.textContent = cityName;
-        document.getElementById('forecasts').innerHTML = '';
-        document.getElementById('forecasts').insertBefore(cityTitle, document.getElementById('output'));
+        forecastsContainer.appendChild(cityTitle);
 
-        let forecastListHTML = '';
+        const forecastList = document.createElement('ul');
+        forecastList.classList.add('forecasts');
+        forecastsContainer.appendChild(forecastList);
 
         dailyForecasts.forEach((forecast) => {
             if (forecastCount < forecastLimit) {
@@ -47,22 +59,33 @@ export async function getWeather() {
                 const weatherIconCode = forecast[0].weather[0].icon;
                 const weatherIconUrl = getWeatherIconUrl(weatherIconCode);
                 const description = forecast[0].weather[0].description;
+                const descriptionElement = document.createElement('li');
+                descriptionElement.textContent = description;
+                descriptionElement.classList.add('weatherDescription');
+                
 
-                forecastListHTML += `
-          <ul>
-            <li>${formattedDate}</li>
-            <li>Temperature: ${temperature.toFixed(0)}°C</li>
-            <li>Feels like: ${feelsLike.toFixed(0)}°C</li>
-            <li>${description}</li>
-            <li><img src="${weatherIconUrl}" alt="Weather icon"></li>
-          </ul>
-        `;
-
+                const forecastItem = document.createElement('li');
+                forecastItem.classList.add('forecast-item');
+                forecastItem.innerHTML = `
+    
+                        <div class="forecast-date">${formattedDate}</div>
+                        <div class="forecast-temperature">Actual temperature: ${temperature.toFixed(0)}°C</div>
+                        <div class="forecast-feels-like">Feels like: ${feelsLike.toFixed(0)}°C</div>
+                        <div class="forecast-description">${descriptionElement.outerHTML}</div>
+                        <div class="forecast-icon"><img src="${weatherIconUrl}" alt="Weather icon"></div>
+                
+                    `;
+                forecastList.appendChild(forecastItem);
                 forecastCount++;
             }
         });
 
-        document.getElementById('forecasts').innerHTML += forecastListHTML;
+        searchContainer.appendChild(photoContainer);
+        searchContainer.appendChild(forecastsContainer);
+
+        const weatherContainer = document.getElementById('weatherContainer');
+        weatherContainer.appendChild(searchContainer);
+
     } catch (error) {
         console.log('An error has occurred', error);
     }

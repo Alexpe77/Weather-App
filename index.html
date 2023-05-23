@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<br lang="en">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -19,21 +19,13 @@
         <h1>Weather App</h1>
     </div>
     <div class="inputs">
-        <input type="text" id="cityInput" placeholder="Enter a city" list="suggestions">
-        <datalist id="suggestions"></datalist>
-        <input type="text" id="countryInput" placeholder="Enter a country">
+        <input type="text" id="cityInput" placeholder="Enter a city" required>
+        <input type="text" id="countryInput" placeholder="Enter a country" required>
         <button id="getWeatherBtn">Get weather forecast</button>
         <button id="clearResultBtn"><i class="fa-regular fa-trash-can fa-lg"></i></button>
     </div>
     <div id="weatherContainer">
-        <div id="photoContainer">
-            <img id="photo1" src="" alt="City photo">
-        </div>
-        <div id="forecastsContainer">
-            <h2 id="cityTitle"></h2>
-            <ul id="forecasts"></ul>
-        </div>
+
     </div>
 </body>
-
 </html>
