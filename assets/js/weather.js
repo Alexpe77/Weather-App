@@ -46,14 +46,16 @@ export async function getWeather() {
                 const feelsLike = Math.round(forecast[0].main.feels_like - 273.15);
                 const weatherIconCode = forecast[0].weather[0].icon;
                 const weatherIconUrl = getWeatherIconUrl(weatherIconCode);
+                const description = forecast[0].weather[0].description;
 
                 forecastListHTML += `
-          <li>
-            <div>${formattedDate}</div>
-            <div>Temperature: ${temperature.toFixed(0)}°C</div>
-            <div>Feels like: ${feelsLike.toFixed(0)}°C</div>
-            <div><img src="${weatherIconUrl}" alt="Weather icon"></div>
-          </li>
+          <ul>
+            <li>${formattedDate}</li>
+            <li>Temperature: ${temperature.toFixed(0)}°C</li>
+            <li>Feels like: ${feelsLike.toFixed(0)}°C</li>
+            <li>${description}</li>
+            <li><img src="${weatherIconUrl}" alt="Weather icon"></li>
+          </ul>
         `;
 
                 forecastCount++;
