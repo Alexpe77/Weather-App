@@ -19,13 +19,14 @@
         <h1>Weather App</h1>
     </div>
     <div class="inputs">
-        <input type="text" id="cityInput" placeholder="Enter a city" required>
-        <input type="text" id="countryInput" placeholder="Enter a country" required>
+        <input type="text" id="cityInput" list="cityOptions" placeholder="Enter a city">
+        <datalist id="cityOptions"></datalist>
+        <input type="text" id="countryInput" placeholder="Enter a country">
         <button id="getWeatherBtn">Get weather forecast</button>
         <button id="clearResultBtn"><i class="fa-regular fa-trash-can fa-lg"></i></button>
     </div>
     <div id="weatherContainer">
 
-    </div>
+    </div>     
 </body>
 </html>

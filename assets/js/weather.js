@@ -1,6 +1,31 @@
 import { groupByDay } from './groupbyday.js';
 
+async function fetchCityOptions(city) {
+
+    const username = 'alexpe77';
+
+    const url = `http://api.geonames.org/searchJSON?q=${city}&username=${username}&style=SHORT`;
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error('An error has occured with GeoNames API.');
+        }
+    
+        const data = await response.json();
+        if (!data.geonames) {
+          throw new Error('The response of the GeoNamesApi does not contain requested data.');
+        }
+    
+        const cityOptions = data.geonames.map((result) => result.name);
+        return cityOptions;
+      } catch (error) {
+        console.log('An error has occured while catching city options :', error);
+        return [];
+      }
+}
+
 export async function getWeather() {
+
     let city = document.getElementById('cityInput').value;
     let country = document.getElementById('countryInput').value;
 
@@ -42,6 +67,23 @@ export async function getWeather() {
         cityTitle.textContent = cityName;
         forecastsContainer.appendChild(cityTitle);
 
+        const cityInput = document.getElementById('cityInput');
+        const datalist = document.createElement('datalist');
+        datalist.id = 'cityOptions';
+        cityInput.setAttribute('list', 'cityOptions');
+        cityInput.parentNode.insertBefore(datalist, cityInput.nextSibling);
+
+        cityInput.addEventListener('input', async function() {
+            const options = await fetchCityOptions(this.value);
+            datalist.innerHTML = '';
+
+            options.forEach((option) => {
+                const optionElement = document.createElement('option');
+                optionElement.value = option;
+                datalist.appendChild(optionElement);
+            });
+        });
+
         const forecastList = document.createElement('ul');
         forecastList.classList.add('forecasts');
         forecastsContainer.appendChild(forecastList);
@@ -62,7 +104,6 @@ export async function getWeather() {
                 const descriptionElement = document.createElement('li');
                 descriptionElement.textContent = description;
                 descriptionElement.classList.add('weatherDescription');
-                
 
                 const forecastItem = document.createElement('li');
                 forecastItem.classList.add('forecast-item');
