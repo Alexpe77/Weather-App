@@ -27,11 +27,10 @@ async function fetchCityOptions(city) {
 export async function getWeather() {
 
     let city = document.getElementById('cityInput').value;
-    let country = document.getElementById('countryInput').value;
 
     try {
         const apiKeyOW = '5683e9929dbb6b31b7fc841e9f3401a0';
-        const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city},${country}&appid=${apiKeyOW}`;
+        const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city},&appid=${apiKeyOW}`;
         const response = await fetch(url);
         const data = await response.json();
 
