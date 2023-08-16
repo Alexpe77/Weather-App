@@ -1,6 +1,7 @@
 # Weather-App 🌤️
 
-The goal was to create a weather app using some api's, for this project i used *OpenWeatherMap* to get the weather data using the native JS fetch() method and *Unsplash* to show a photo of the city they entered in the form.
+The goal was to create a weather app using some api's, for this project i used *OpenWeatherMap* to get the weather data using the native JS fetch() method and *Unsplash* to show a photo of the city they entered in the form. </br>
+Here's the link to access this project : [Weather App](https://alexpe77.github.io/Weather-App/)
 
 ## Specifications 🧰
 
